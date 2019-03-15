@@ -1063,7 +1063,7 @@ $(document).on("click", "#show_dlg", function () {
     var pageType = $(this).attr("page_type");
     var listPageNo = $(this).attr("listPageNo");
     pageNo = listPageNo;
-
+    
     $insertForm = $('#commonLayout .insertForm').eq(0).clone();
     $dlgForm = $('#commonLayout .textLayout').eq(0).clone();
     $carouselForm = $('#commonLayout .carouselLayout').eq(0).clone();

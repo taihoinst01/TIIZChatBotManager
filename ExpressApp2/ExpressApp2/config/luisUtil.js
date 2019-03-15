@@ -93,16 +93,11 @@ module.exports = {
         returnObj.intentList = intentList;
         returnObj.entityList = entityList;
         returnObj.childrenList = childrenList;
-        //returnObj.closedEntityList = closedEntityList;
         return returnObj;
     },
 
     getChildEntityList: function (body) {
-
-        //typeId expected is {3,4}
-
         var childrenList = [];
-        //var closedEntityList = [];
         switch (body.typeId) {
             case 3://"readableType": "Hierarchical Entity Extractor",
                 body.children.forEach( k => {
@@ -145,7 +140,6 @@ module.exports = {
                 break;
         }
         
-        //returnObj.closedEntityList = closedEntityList;
         return childrenList;
 
     },
@@ -154,12 +148,7 @@ module.exports = {
         var intentList = [];
         body.forEach(x => {
             x.appId = appId;
-            /*
-            var tmpObj = new Object();
-            tmpObj.APP_ID = appId;
-            tmpObj.INTENT_ID = x.id;
-            tmpObj.INTENT = x.name;
-            */
+
             intentList.push(x);
         });
         return intentList;
@@ -169,12 +158,7 @@ module.exports = {
         var simpleList = [];
         body.forEach(x => {
             x.appId = appId;
-            /*
-            var tmpObj = new Object();
-            tmpObj.APP_ID = appId;
-            tmpObj.ENTITY_ID = x.id;
-            tmpObj.ENTITY = x.name;
-            */
+
             simpleList.push(x);
         });
         return simpleList;
@@ -186,12 +170,7 @@ module.exports = {
         var childrenList = [];
         body.forEach(x => {
             x.appId = appId;
-            /*
-            var tmpObj = new Object();
-            tmpObj.APP_ID = appId;
-            tmpObj.ENTITY_ID = x.id;
-            tmpObj.ENTITY = x.name;
-            */
+
             hierarchyList.push(x);
             x.children.forEach(k => {
                 var tmpObj = new Object();
@@ -213,12 +192,7 @@ module.exports = {
         var childrenList = [];
         body.forEach(x => {
             x.appId = appId;
-            /*
-            var tmpObj = new Object();
-            tmpObj.APP_ID = appId;
-            tmpObj.ENTITY_ID = x.id;
-            tmpObj.ENTITY = x.name;
-            */
+
             compositeList.push(x);
 
             x.children.forEach(k => {
@@ -241,12 +215,7 @@ module.exports = {
         var childrenList = [];
         body.forEach(x => {
             x.appId = appId;
-            /*
-            var tmpObj = new Object();
-            tmpObj.APP_ID = appId;
-            tmpObj.ENTITY_ID = x.id;
-            tmpObj.ENTITY = x.name;
-            */
+
             closedList.push(x);
 
             x.subLists.forEach( k => {

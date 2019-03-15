@@ -13,16 +13,7 @@ module.exports = {
         //sql injection
         var value = val.toLowerCase(); //�빮��->�ҹ��ڷ� ��ȯ
         var isInjection = false;
-        /*
-        for (var i = 0; i < sz; i++) {
-            if ((value.indexOf(str[i], 0) > -1) && (value.indexOf('word', 0) == -1)) {
-                isInjection = true;
-                break;
-            }
-        }
-        */
 
-        
         //XSS
         if (!isInjection) {
             var strXSS =
@@ -100,60 +91,5 @@ module.exports = {
         
         return returnValue;
     }
-    /*,
 
-    InsertDialogChk : function (val, dlgType) {
-        
-    }
-    */
 }
-/*
-module.exports.InjectionCheck = function (val) {
-
-    var str = "select,insert,update,delete,merge,commit,rollback,create,alter,drop,truncate,grant,revoke,union,and, or,--";
-    var str = str.split(",");
-    var sz = str.length;
-    //sql injection
-    var value = val.toLowerCase(); //�빮��->�ҹ��ڷ� ��ȯ
-    var isInjection = false;
-    for (var i = 0; i < sz; i++) {
-        if ((value.indexOf(str[i], 0) > -1) && (value.indexOf('word', 0) == -1)) {
-            isInjection = true;
-            break;
-        }
-    }
-    //XSS
-    if (!isInjection) {
-        var strXSS =
-            [
-                "@im\port'\ja\vasc\ript",
-                "jav &#x09; ascript",
-                "IMG SRC = javascript",
-                '[onmouseover = "alert(\'xss\')"]',
-                "url = javascript:",
-                "java\0script",
-                "<script",
-                "/>",
-                ">",
-                "<",
-                "src=",
-                "<marquee>",
-                "[url=javascript",
-                "alert(",
-                "x:expression(", 
-                "href=",
-                ".config",
-                "\system",
-            ];
-        sz = strXSS.length;
-
-        for (var i = 0; i < sz; i++) {
-            if (value.indexOf(strXSS[i], 0) > -1) {
-                isInjection = true;
-                break;
-            }
-        }
-    }
-    return isInjection;
-};
-*/

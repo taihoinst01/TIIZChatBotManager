@@ -35,19 +35,6 @@ module.exports = {
         } else {
             conn = new sql.ConnectionPool(dbConfig.dbConfig);
         }
-
-        /*
-        switch (appName) {
-            case 'autoway_luis_01':
-                conn = new sql.ConnectionPool(dbConfig.autowayDbConfig);
-                break;
-
-            default :
-                conn = new sql.ConnectionPool(dbConfig.dbConfig);
-                break;
-        }
-        */
-
         //override close behavior to eliminate the pool
         var close_conn = conn.close;
         conn.close = function(){
@@ -64,26 +51,9 @@ module.exports = {
     },
 
     getConnection : function (sql) {
-
-        /*
-        var defaultdbConfig = {
-            user: 'taihoinst',
-            password: 'taiho9788!',
-            server: 'taiholab.database.windows.net',
-            database: 'chatMng',
-            connectionTimeout : 30000,
-            requestTimeout : 30000,
-            options: {
-                encrypt: true
-            }
-        };
-        */
        if (pool) return pool;
 
        var conn = new sql.ConnectionPool(dbConfig.dbConfig);
-        //var conn = new sql.ConnectionPool(defaultdbConfig);
-
-        //override close behavior to eliminate the pool
         var close_conn = conn.close;
         conn.close = function(){
             pool = null;

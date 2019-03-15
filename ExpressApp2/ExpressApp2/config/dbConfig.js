@@ -1,15 +1,16 @@
 
 var dbConfig = {
+    
+    user: 'mtcadmin',
+    password: 'qwer!asdF',
+    server: 'mtcchatbotdb.database.windows.net',
+    database: 'MTCChatBotManager',
     /*
-    user: 'sa',
-    password: '1234',
-    server: 'localhost\\SQLEXPRESS',
-    database: 'cjEmployeeManager',
-    */
     user: 'hanjinadmin',
     password: 'qwer!asdF',
     server: 'hanjindb.database.windows.net',
     database: 'HanjinChatBotManager',
+    */
     connectionTimeout : 10000,
     requestTimeout : 30000,
     options: {

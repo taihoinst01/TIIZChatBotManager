@@ -49,6 +49,12 @@ router.get('/newQnaMng', function (req, res) {
     res.render('qna/newQnaMng');
 });
 
+//제츠처 기능 추가
+router.get('/gestureMng', function (req, res) {
+    logger.info('[알림] [id : %s] [url : %s] [내용 : %s] ', req.session.sid, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, 'router 시작');
+    res.render('qna/gestureMng');
+});
+
 router.post('/selectQnaList', function (req, res) {
     logger.info('[알림] [id : %s] [url : %s] [내용 : %s] ', req.session.sid, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, 'router 시작');
     var pageSize = checkNull(req.body.rows, 10);
@@ -1823,5 +1829,145 @@ router.post('/procQnaList', function (req, res) {
         // ... error handler
     })
 });
+
+router.post('/selectGestureList', function (req, res) {
+    logger.info('[알림] [id : %s] [url : %s] [내용 : %s] ', req.session.sid, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, 'router 시작');
+    var pageSize = checkNull(req.body.rows, 10);
+    var currentPage = checkNull(req.body.currentPage, 1);
+    
+    (async () => {
+        try {
+
+            var QueryStr = "SELECT tbp.* from \n" +
+                            " (SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS NUM, \n" +
+                            "         COUNT('1') OVER(PARTITION BY '1') AS TOTCNT, \n"  +
+                            "         CEILING((ROW_NUMBER() OVER(ORDER BY SEQ DESC))/ convert(numeric ,10)) PAGEIDX, \n" +
+                            "         A.SEQ, A.Q_ID, A.DLG_QUESTION, A.INTENT, ENTITY, A.GROUP_ID, A.DLG_ID, A.REG_DT, A.APP_ID, A.USE_YN, B.GESTURE,  \n" +
+                            "         (SELECT DLG_TYPE FROM TBL_DLG WHERE DLG_ID = A.DLG_ID) AS DLG_TYPE  \n" +
+                           "          FROM TBL_QNAMNG A, TBL_DLG_RELATION_LUIS B\n" +
+                           "          WHERE A.DLG_ID < 1000  \n" +
+                           "          AND A.GROUP_ID IS NULL   \n" +
+                           "          AND A.DLG_ID = B.DLG_ID \n";
+                           if (req.body.searchQuestiontText !== '') {
+                            QueryStr += "AND A.DLG_QUESTION like '%" + req.body.searchQuestiontText + "%' \n";
+                        }
+
+                        if (req.body.searchIntentText !== '') {
+                            QueryStr += "AND A.INTENT like '%" + req.body.searchIntentText + "%' \n";
+                        }
+                        QueryStr +="  ) tbp WHERE PAGEIDX = " + currentPage + "; \n";
+
+            var dlgDataText = "SELECT CARD_TEXT FROM TBL_DLG_TEXT WHERE DLG_ID =@dialogId";
+            var dlgDataCard = "SELECT CARD_TEXT FROM TBL_DLG_CARD WHERE DLG_ID =@dialogId";
+
+            let pool = await dbConnect.getAppConnection(sql, req.session.appName, req.session.dbValue);
+            let result1 = await pool.request().query(QueryStr);
+
+            let rows = result1.recordset;
+
+            var recordList = [];
+            for (var i = 0; i < rows.length; i++) {
+                var item = {};
+                item = rows[i];
+                /*
+                * 답변 내용 추가
+                */
+               var answerStr = "";
+               item.subQryList = [];
+               if(rows[i].DLG_TYPE=="2"){
+                    answerStr = dlgDataText;
+               }else if(rows[i].DLG_TYPE=="3"){
+                    answerStr = dlgDataCard;
+               }else{
+                    answerStr = dlgDataText;
+               }
+
+                let subQryResult = await pool.request()
+                .input('dialogId', sql.NVarChar, rows[i].DLG_ID)
+                .query(answerStr);
+
+                let subQryRows = subQryResult.recordset;
+                for(var j=0; j<subQryRows.length; j++){
+                    var subQryItem = {};
+                    subQryItem.ANSWER = subQryRows[j].CARD_TEXT;
+                    item.subQryList.push(subQryItem);
+                }
+                
+                recordList.push(item);
+            }
+
+
+            if (rows.length > 0) {
+
+                var totCnt = 0;
+                if (recordList.length > 0)
+                    totCnt = checkNull(recordList[0].TOTCNT, 0);
+                var getTotalPageCount = Math.floor((totCnt - 1) / checkNull(rows[0].TOTCNT, 10) + 1);
+
+
+                res.send({
+                    records: recordList.length,
+                    total: getTotalPageCount,
+                    pageList: paging.pagination(currentPage, rows[0].TOTCNT), //page : checkNull(currentPageNo, 1),
+                    rows: recordList
+                });
+
+            } else {
+                res.send({
+                    records : 0,
+                    rows : null
+                });
+            }
+        } catch (err) {
+            logger.info('[에러] [id : %s] [url : %s] [내용 : %s] ', req.session.sid, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, err.message);
+            
+            res.send({
+                records : 0,
+                rows : null
+            });
+            // ... error checks
+        } finally {
+            sql.close();
+        }
+    })()
+
+    sql.on('error', err => {
+        // ... error handler
+    })
+});
+
+router.post('/updateGesture', function (req, res) {  
+    var gestureItemArr = JSON.parse(req.body.saveArr);
+    var updateStr = "";
+
+    var userId = req.session.sid;
+    
+    for (var i=0; i<gestureItemArr.length; i++) {
+        updateStr += "UPDATE TBL_DLG_RELATION_LUIS SET GESTURE="+gestureItemArr[i].GESTURE+" WHERE DLG_ID = "+ gestureItemArr[i].DLG_ID;
+    }
+    
+    (async () => {
+        try {
+            let pool = await dbConnect.getAppConnection(sql, req.session.appName, req.session.dbValue);
+            
+            if (updateStr !== "") {
+                
+                let update = await pool.request().query(updateStr);
+            }
+            res.send({status:200 , message:'UPDATE Success'});
+            
+        } catch (err) {
+            console.log(err);
+            res.send({status:500 , message:'UPDATE Error'});
+        } finally {
+            sql.close();
+        }
+    })()
+
+    sql.on('error', err => {
+        // ... error handler
+    })
+});
+
 
 module.exports = router;
