@@ -76,64 +76,64 @@ function makeGetureTable(page) {
                 for (var i = 0; i < data.rows.length; i++) {
                     var gestureText = "";
                     switch (data.rows[i].GESTURE){
-                        case 1:
+                        case 0:
                             gestureText = "화남. 화내며 분해하는 모습";
                             break;
-                        case 2:
+                        case 1:
                             gestureText = "야호. 한쪽팔을 들며 점프";
                             break;
-                        case 3:
+                        case 2:
                             gestureText = "혼란. 머리를 양손으로 잡고 좌우로 흔들고 찡그린 표정";
                             break;
-                        case 4:
+                        case 3:
                             gestureText = "울리. 양손으로 눈물을 훔침";
                             break;
-                        case 5:
+                        case 4:
                             gestureText = "귀여움. 양손으로 V를 함.";
                             break;
-                        case 6:
+                        case 5:
                             gestureText = "멍때리기. 귀를 쫑긋하고 가만히 서 있음.";
                             break;
-                        case 7:
+                        case 6:
                             gestureText = "신남. 양팔을 위로 뻗으며 팔짝팔짝 뛴다";
                             break;
-                        case 8:
+                        case 7:
                             gestureText = "인사. 허리를 90도로 꺽으며 공손하게 인사";
                             break;
-                        case 9:
+                        case 8:
                             gestureText = "인사. 가볍게 손을 흔들며 인사";
                             break;
-                        case 10:
+                        case 9:
                             gestureText = "기본표정.잔잔한 미소";
                             break;
-                        case 11:
+                        case 10:
                             gestureText = "흥미. 눈이 반짝반짝하는 표정으로 고개를 앞으로 내밀며 관심을 보임";
                             break;
-                        case 12:
+                        case 11:
                             gestureText = "기쁨.";
                             break;
-                        case 13:
+                        case 12:
                             gestureText = "좋음. 눈에 하트가 뿅뿅";
                             break;
-                        case 14:
+                        case 13:
                             gestureText = "부정. 팔로 X자 표현";
                             break;
-                        case 15:
+                        case 14:
                             gestureText = "부정. 팔을 허리에 대고 고개를 흔듬";
                             break;
-                        case 16:
+                        case 15:
                             gestureText = "긍정. 손으로 OK";
                             break;
-                        case 17:
+                        case 16:
                             gestureText = "긍정. 팔로 동그라미 표현";
                             break;
-                        case 18:
+                        case 17:
                             gestureText = "졸림. 졸다가 넘어질뻔 함";
                             break;
-                        case 19:
+                        case 18:
                             gestureText = "생각하는 표정. 고개를 갸우뚱";
                             break;
-                        case 20:
+                        case 19:
                             gestureText = "윙크";
                             break;
                         default:
@@ -206,64 +206,64 @@ function getGestureSelect(gestureVal){
         var gestureText = "";
         var selectText = "";
         switch (i){
-            case 1:
+            case 0:
                 gestureText = "화남. 화내며 분해하는 모습";
                 break;
-            case 2:
+            case 1:
                 gestureText = "야호. 한쪽팔을 들며 점프";
                 break;
-            case 3:
+            case 2:
                 gestureText = "혼란. 머리를 양손으로 잡고 좌우로 흔들고 찡그린 표정";
                 break;
-            case 4:
+            case 3:
                 gestureText = "울리. 양손으로 눈물을 훔침";
                 break;
-            case 5:
+            case 4:
                 gestureText = "귀여움. 양손으로 V를 함.";
                 break;
-            case 6:
+            case 5:
                 gestureText = "멍때리기. 귀를 쫑긋하고 가만히 서 있음.";
                 break;
-            case 7:
+            case 6:
                 gestureText = "신남. 양팔을 위로 뻗으며 팔짝팔짝 뛴다";
                 break;
-            case 8:
+            case 7:
                 gestureText = "인사. 허리를 90도로 꺽으며 공손하게 인사";
                 break;
-            case 9:
+            case 8:
                 gestureText = "인사. 가볍게 손을 흔들며 인사";
                 break;
-            case 10:
+            case 9:
                 gestureText = "기본표정.잔잔한 미소";
                 break;
-            case 11:
+            case 10:
                 gestureText = "흥미. 눈이 반짝반짝하는 표정으로 고개를 앞으로 내밀며 관심을 보임";
                 break;
-            case 12:
+            case 11:
                 gestureText = "기쁨.";
                 break;
-            case 13:
+            case 12:
                 gestureText = "좋음. 눈에 하트가 뿅뿅";
                 break;
-            case 14:
+            case 13:
                 gestureText = "부정. 팔로 X자 표현";
                 break;
-            case 15:
+            case 14:
                 gestureText = "부정. 팔을 허리에 대고 고개를 흔듬";
                 break;
-            case 16:
+            case 15:
                 gestureText = "긍정. 손으로 OK";
                 break;
-            case 17:
+            case 16:
                 gestureText = "긍정. 팔로 동그라미 표현";
                 break;
-            case 18:
+            case 17:
                 gestureText = "졸림. 졸다가 넘어질뻔 함";
                 break;
-            case 19:
+            case 18:
                 gestureText = "생각하는 표정. 고개를 갸우뚱";
                 break;
-            case 20:
+            case 19:
                 gestureText = "윙크";
                 break;
             default:
