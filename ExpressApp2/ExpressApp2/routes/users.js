@@ -327,10 +327,10 @@ router.post('/login', function (req, res) {
                 }
             }
             userLoginIP = addresses[0];
-            var testData = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+            var testData = req.ip;
 
             console.log("testData==="+testData);
-            logger.info('[알림]ip check  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
+            logger.info('[알림]ip check22222  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
 
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
