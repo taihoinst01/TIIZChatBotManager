@@ -327,6 +327,10 @@ router.post('/login', function (req, res) {
                 }
             }
             userLoginIP = addresses[0];
+            var test = req.header('x-forwarded-for');
+            console.log("test==="+test);
+            console.log("interfaces==="+JSON.stringify(interfaces));
+            alert("interfaces==="+JSON.stringify(interfaces));
 
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
