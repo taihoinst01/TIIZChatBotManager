@@ -327,10 +327,9 @@ router.post('/login', function (req, res) {
                 }
             }
             userLoginIP = addresses[0];
-            var test = req.header('x-forwarded-for');
-            console.log("test==="+test);
-            console.log("interfaces==="+JSON.stringify(interfaces));
-            alert("interfaces==="+JSON.stringify(interfaces));
+
+            var testData = JSON.stringify(interfaces);
+            logger.info('[알림]ip check  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
 
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
