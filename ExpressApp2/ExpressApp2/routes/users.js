@@ -328,10 +328,14 @@ router.post('/login', function (req, res) {
             }
             userLoginIP = addresses[0];
             var testData;
+            var testData1;
 
             testData = req.ip;
+            testData1 = req.connection.remoteAddress;
             console.log("testData==="+testData);
-            logger.info('[알림]ip check===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
+            console.log("testData1==="+testData1);
+            logger.info('[알림]ip check111===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
+            logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1);
 
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
