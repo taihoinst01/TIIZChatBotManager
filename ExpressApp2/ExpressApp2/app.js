@@ -392,6 +392,8 @@ app.use(function (err, req, res, next) {
 app.set('port', process.env.PORT || 3000);
 console.log("app.js port : " + app.get('port')) ;
 
+app.set('trust proxy', true);
+
 var server = app.listen(app.get('port'), '0.0.0.0', function () {
     debug('Express server listening on port ' + server.address().port);
 });
