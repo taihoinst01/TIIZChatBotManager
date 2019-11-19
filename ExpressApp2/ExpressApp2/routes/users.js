@@ -333,7 +333,14 @@ router.post('/login', function (req, res) {
             
 
             testData = req.ip;
-            testData1 = req.connection.remoteAddress;
+            //testData1 = req.connection.remoteAddress;
+            if (req.headers['x-forwarded-for']) {
+                testData1 = "req.forwarded========="+req.headers['x-forwarded-for'].split(",")[0];
+            } else if (req.connection && req.connection.remoteAddress) {
+                testData1 = "req.remoteAddress========="+req.connection.remoteAddress;
+            } else {
+                testData1 = "req.ip========="+req.ip;
+            }
             
             console.log("testData==="+testData);
             console.log("testData1==="+testData1);
