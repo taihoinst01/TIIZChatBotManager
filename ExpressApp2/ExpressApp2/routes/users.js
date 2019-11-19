@@ -348,13 +348,14 @@ router.post('/login', function (req, res) {
             }
 
             if(req.headers['x-real-ip']){
-                testData2 = "req.real========="+req.headers['x-real-ip'];
+                testData2 = "req.real111========="+req.headers['x-real-ip'];
             }else{
-                testData2 = "req.real=========";
+                testData2 = "req.real222=========";
             }
             
             console.log("testData==="+testData);
             console.log("testData1==="+testData1);
+            console.log("req.headers===="+JSON.stringify(req.headers));
             
 
             
@@ -363,6 +364,7 @@ router.post('/login', function (req, res) {
             logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1_1);
             logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1_2);
             logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData2);
+            logger.info('[알림]req_header===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, JSON.stringify(req.headers));
 
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
