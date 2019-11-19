@@ -330,16 +330,27 @@ router.post('/login', function (req, res) {
             userLoginIP = addresses[0];
             var testData;
             var testData1;
+            var testData1_!;
+            var testData1_2;
+            var testData2;
             
 
             testData = req.ip;
             //testData1 = req.connection.remoteAddress;
             if (req.headers['x-forwarded-for']) {
                 testData1 = "req.forwarded========="+req.headers['x-forwarded-for'].split(",")[0];
+                testData1_1 = "req.forwarded========="+req.headers['x-forwarded-for'].split(",")[1];
+                testData1_2 = "req.forwarded========="+req.headers['x-forwarded-for'].split(",")[2];
             } else if (req.connection && req.connection.remoteAddress) {
                 testData1 = "req.remoteAddress========="+req.connection.remoteAddress;
             } else {
                 testData1 = "req.ip========="+req.ip;
+            }
+
+            if(req.headers['x-real-ip']){
+                testData2 = "req.real========="+req.headers['x-real-ip'];
+            }else{
+                testData2 = "req.real=========";
             }
             
             console.log("testData==="+testData);
@@ -349,6 +360,9 @@ router.post('/login', function (req, res) {
             
             logger.info('[알림]ip check111===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
             logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1);
+            logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1_1);
+            logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1_2);
+            logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData2);
 
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
