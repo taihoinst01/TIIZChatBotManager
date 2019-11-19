@@ -330,12 +330,14 @@ router.post('/login', function (req, res) {
             userLoginIP = addresses[0];
             var testData;
             var testData1;
+            
 
             testData = req.ip;
             testData1 = req.connection.remoteAddress;
             
             console.log("testData==="+testData);
             console.log("testData1==="+testData1);
+            
 
             
             logger.info('[알림]ip check111===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
