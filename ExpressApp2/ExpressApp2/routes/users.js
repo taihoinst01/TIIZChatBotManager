@@ -210,6 +210,7 @@ router.post('/login', function (req, res) {
     try {
         (async () => {
             let pool = await dbConnect.getAppConnection(sql);
+            
 
             if (isLoggedIn) {
                 let dupleLogout = await pool.request()
@@ -331,9 +332,11 @@ router.post('/login', function (req, res) {
             var testData1;
 
             testData = req.ip;
-            testData1 = req.socket.remoteAddress;
+            testData1 = req.connection.remoteAddress;
             console.log("testData==="+testData);
             console.log("testData1==="+testData1);
+
+            
             logger.info('[알림]ip check111===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData);
             logger.info('[알림]ip check222===================  [id : %s] [url : %s] [내용 : %s]', userId, req.originalUrl.indexOf("?")>0?req.originalUrl.split("?")[0]:req.originalUrl, testData1);
 
