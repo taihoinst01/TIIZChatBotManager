@@ -328,7 +328,8 @@ router.post('/login', function (req, res) {
             
             if (userLoginIP != "") {
                 var tmpIp = userLoginIP.split(':');
-                userLoginIP = tmpIp[tmpIp.length - 1];
+                //userLoginIP = tmpIp[tmpIp.length - 1];
+                userLoginIP = tmpIp[0];
 
                 /*
                 if ((userLoginIP != userInfo[0].LOGIN_IP && userInfo[0].LOGIN_IP_YN != 'N') ) {
